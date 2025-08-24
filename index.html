@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geological Storytelling - Standards Alignment</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .activity-title {
+            color: #667eea;
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            color: #764ba2;
+            font-size: 1.2em;
+            font-style: italic;
+        }
+        
+        .selector-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(145deg, #f8f9ff, #e8ecff);
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .selector-label {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .state-selector {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .state-selector:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+        
+        .state-selector:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .standards-display {
+            margin-top: 25px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            min-height: 200px;
+        }
+        
+        .standards-title {
+            color: #667eea;
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .standard-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .standard-code {
+            font-weight: bold;
+            color: #764ba2;
+            font-size: 1.05em;
+            margin-bottom: 8px;
+        }
+        
+        .standard-description {
+            color: #555;
+            margin-bottom: 10px;
+        }
+        
+        .activity-connection {
+            font-style: italic;
+            color: #667eea;
+            background: #f0f3ff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 8px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #764ba2;
+            font-style: italic;
+            padding: 40px;
+        }
+        
+        .footer-note {
+            margin-top: 30px;
+            padding: 20px;
+            background: linear-gradient(145deg, #fff5f5, #ffeaea);
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+            font-size: 0.95em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="activity-title">Geological Storytelling</h1>
+            <p class="subtitle">Understanding Deep Time Through Motion</p>
+        </div>
+        
+        <div class="selector-section">
+            <label for="stateSelector" class="selector-label">Select Your State/Region Standards:</label>
+            <select id="stateSelector" class="state-selector">
+                <option value="">Choose your state or region...</option>
+                <option value="ngss">Next Generation Science Standards (NGSS)</option>
+                <option value="california">California</option>
+                <option value="texas">Texas (TEKS)</option>
+                <option value="florida">Florida</option>
+                <option value="new_york">New York</option>
+                <option value="pennsylvania">Pennsylvania</option>
+                <option value="illinois">Illinois</option>
+                <option value="ohio">Ohio</option>
+                <option value="georgia">Georgia</option>
+                <option value="north_carolina">North Carolina</option>
+                <option value="michigan">Michigan</option>
+            </select>
+        </div>
+        
+        <div id="standardsDisplay" class="standards-display">
+            <div class="loading">Select a state or region above to view aligned standards</div>
+        </div>
+        
+        <div class="footer-note">
+            <strong>Note:</strong> This activity's modular design allows teachers to emphasize different standards based on which cards are selected for implementation. The alignment shown represents comprehensive coverage when all 7 cards are used.
+        </div>
+    </div>
+
+    <script>
+        const standardsData = {
+            ngss: {
+                title: "Next Generation Science Standards (NGSS)",
+                standards: [
+                    {
+                        code: "MS-ESS1-4",
+                        description: "Develop and use a model of the Earth-sun-moon system to describe the cyclic patterns of lunar phases, eclipses of the sun and moon, and seasons.",
+                        connection: "Cards 4 & 7: Deep time video analysis connects geological processes to astronomical time scales and Earth system interactions."
+                    },
+                    {
+                        code: "MS-ESS2-1", 
+                        description: "Develop a model to describe the cycling of Earth's materials and the flow of energy that drives this process.",
+                        connection: "Cards 1, 2, 3, 6: Subduction, canyon formation, and hot spot processes demonstrate material cycling and energy flow through Earth systems."
+                    },
+                    {
+                        code: "MS-ESS2-2",
+                        description: "Analyze and interpret data on scale properties of objects in the solar system.",
+                        connection: "Card 4: Deep time videos emphasize the scale of geological time compared to human timescales and astronomical processes."
+                    },
+                    {
+                        code: "MS-ESS2-3",
+                        description: "Analyze and interpret data on the distribution of fossils and rocks, continental shapes, and seafloor structures to provide evidence of the past plate motions.",
+                        connection: "Cards 1, 3, 5: Subduction and hot spot evidence analysis, plus artistic geological representations showing plate motion evidence."
+                    },
+                    {
+                        code: "MS-ETS1-1",
+                        description: "Define the criteria and constraints of a design problem with sufficient precision to ensure a successful solution.",
+                        connection: "Card 6: Flipbook engineering requires students to define criteria for successful animation of geological processes."
+                    },
+                    {
+                        code: "MS-ETS1-2",
+                        description: "Evaluate competing design solutions using a systematic process to determine how well they meet the criteria and constraints of the problem.",
+                        connection: "Card 6: Students evaluate different flipbook assembly approaches and compare effectiveness of different geological process representations."
+                    }
+                ]
+            },
+            california: {
+                title: "California Science Standards",
+                standards: [
+                    {
+                        code: "6.1.f",
+                        description: "Students know how to explain the properties of rocks and minerals based on the physical and chemical conditions in which they formed, including plate tectonic processes.",
+                        connection: "Cards 1, 2, 3: Direct examination of plate tectonic processes (subduction) and their role in rock and mineral formation through geological time."
+                    },
+                    {
+                        code: "6.2.a",
+                        description: "Students know the utility of energy sources and the pros and cons of alternative energy sources.",
+                        connection: "Card 3: Hot spot analysis connects to geothermal energy sources and Earth's internal energy systems."
+                    },
+                    {
+                        code: "6.2.d",
+                        description: "Students know earthquakes, volcanic eruptions, landslides, and floods change human and wildlife habitats.",
+                        connection: "Cards 1, 2, 4: Subduction and canyon formation processes show how geological events reshape habitats over deep time."
+                    },
+                    {
+                        code: "7.1.g",
+                        description: "Students know how to interpret events by sequence and time from natural phenomena.",
+                        connection: "Cards 4, 6, 7: Deep time analysis and flipbook sequence creation emphasize temporal interpretation of natural processes."
+                    },
+                    {
+                        code: "Investigation & Experimentation 7.7.c",
+                        description: "Communicate the logical connection among hypotheses, science concepts, tests conducted, data collected, and conclusions drawn from scientific evidence.",
+                        connection: "All cards: Field journal documentation throughout requires students to connect observations, evidence, and conclusions about geological processes."
+                    }
+                ]
+            },
+            texas: {
+                title: "Texas Essential Knowledge and Skills (TEKS)",
+                standards: [
+                    {
+                        code: "6.10.A",
+                        description: "Build a model to illustrate how the compositional and mechanical layers of Earth affect the development of surface features.",
+                        connection: "Cards 1, 6: Subduction investigation and flipbook creation model how Earth's layers interact to create surface features."
+                    },
+                    {
+                        code: "6.10.B", 
+                        description: "Classify rocks as metamorphic, igneous, or sedimentary by the processes of their formation.",
+                        connection: "Cards 1, 2, 3: Geological processes shown demonstrate different rock formation environments and mechanisms."
+                    },
+                    {
+                        code: "6.10.C",
+                        description: "Identify the major tectonic plates and describe how they move relative to one another and the geological features and events found at tectonic plate boundaries.",
+                        connection: "Cards 1, 3, 5: Direct focus on plate boundaries through subduction zones and hot spot evidence analysis."
+                    },
+                    {
+                        code: "6.2.C",
+                        description: "Collect and record data using the International System of Units (SI) and qualitative means such as labeled drawings, writing, and graphic organizers.",
+                        connection: "Cards 5, 7: Detailed geological art analysis and field journal documentation emphasize both qualitative recording and systematic observation."
+                    },
+                    {
+                        code: "6.3.D",
+                        description: "Relate the impact of research on scientific thought and society, including the history of science and contributions of scientists as related to the content.",
+                        connection: "Cards 4, 5: Deep time videos and geological art connect to historical development of geological understanding and scientific contributions."
+                    }
+                ]
+            },
+            florida: {
+                title: "Florida Standards",
+                standards: [
+                    {
+                        code: "SC.6.E.6.1",
+                        description: "Describe and give examples of ways in which Earth's surface is built up and torn down by physical and chemical weathering, erosion, and deposition.",
+                        connection: "Card 2: Canyon formation analysis directly demonstrates erosion processes building up and tearing down Earth's surface over time."
+                    },
+                    {
+                        code: "SC.6.E.6.2",
+                        description: "Recognize that there are a variety of different landforms on Earth's surface as a result of the processes that shape Earth's surface.",
+                        connection: "Cards 1, 2, 3: Multiple geological processes (subduction, erosion, hot spots) show variety of landform creation mechanisms."
+                    },
+                    {
+                        code: "SC.7.E.6.2",
+                        description: "Identify the patterns within the rock cycle and relate them to surface events and sub-surface events.",
+                        connection: "Cards 1, 3, 6: Subduction and hot spot processes connect surface and subsurface events in rock cycle context."
+                    },
+                    {
+                        code: "SC.7.E.6.7",
+                        description: "Recognize that heat flow and movement of material within Earth causes earthquakes and volcanic eruptions, and creates mountains and ocean basins.",
+                        connection: "Cards 1, 3: Direct examination of heat flow through subduction zones and hot spot volcanic activity."
+                    },
+                    {
+                        code: "SC.6.N.3.4",
+                        description: "Identify the role of models in the context of the sixth and seventh grade science benchmarks.",
+                        connection: "Card 6: Flipbook creation serves as physical models demonstrating geological processes and their role in scientific understanding."
+                    }
+                ]
+            },
+            new_york: {
+                title: "New York State Learning Standards",
+                standards: [
+                    {
+                        code: "MS-ESS1-4",
+                        description: "Develop and use a model of the Earth-sun-moon system to describe the cyclic patterns.",
+                        connection: "Card 4: Deep time video analysis connects geological time scales to astronomical cycles and Earth system patterns."
+                    },
+                    {
+                        code: "MS-ESS2-1",
+                        description: "Develop a model to describe the cycling of Earth's materials and the flow of energy that drives this process.",
+                        connection: "Cards 1, 2, 3: Subduction, canyon formation, and volcanic processes demonstrate material cycling and energy flow in Earth systems."
+                    },
+                    {
+                        code: "MS-ESS2-2",
+                        description: "Analyze and interpret data on scale properties to provide evidence of objects in the solar system.",
+                        connection: "Card 4: Emphasis on temporal scales and comparison between geological and astronomical time frames."
+                    },
+                    {
+                        code: "MS-ESS2-3",
+                        description: "Analyze and interpret data on the distribution of fossils and rocks to provide evidence of past plate motions.",
+                        connection: "Cards 1, 3, 5: Plate motion evidence through subduction analysis, hot spot tracks, and geological art interpretation."
+                    },
+                    {
+                        code: "MS-ETS1-2",
+                        description: "Evaluate competing design solutions using a systematic process to determine how well they meet criteria.",
+                        connection: "Card 6: Students evaluate flipbook design approaches for effectively communicating geological processes."
+                    }
+                ]
+            },
+            pennsylvania: {
+                title: "Pennsylvania Academic Standards",
+                standards: [
+                    {
+                        code: "3.5.6.A",
+                        description: "Describe Earth's different layers and their interactions with each other.",
+                        connection: "Cards 1, 6: Subduction processes and flipbook models show interaction between Earth's crustal and mantle layers."
+                    },
+                    {
+                        code: "3.5.7.D",
+                        description: "Explain how the rock cycle is affected by the hydrosphere, atmosphere, and biosphere.",
+                        connection: "Card 2: Canyon formation demonstrates how hydrosphere (water erosion) affects rock cycle processes over geological time."
+                    },
+                    {
+                        code: "3.2.6.A",
+                        description: "Apply knowledge of models to make predictions, draw inferences, or explain technological concepts.",
+                        connection: "Card 6: Flipbook engineering requires students to create predictive models of geological processes and test their accuracy."
+                    },
+                    {
+                        code: "3.2.7.B",
+                        description: "Apply knowledge of scale as a way to relate concepts and ideas to one another.",
+                        connection: "Card 4: Deep time video analysis emphasizes scale relationships between human time and geological time."
+                    },
+                    {
+                        code: "3.1.7.E",
+                        description: "Identify and explain the differences between scientific theory and belief systems.",
+                        connection: "Cards 4, 5: Historical geological art and deep time concepts show development of scientific understanding over time."
+                    }
+                ]
+            },
+            illinois: {
+                title: "Illinois Learning Standards",
+                standards: [
+                    {
+                        code: "MS-ESS2-1",
+                        description: "Develop a model to describe the cycling of Earth's materials and energy flow.",
+                        connection: "Cards 1, 2, 3: Direct modeling of Earth material cycling through subduction, erosion, and volcanic processes."
+                    },
+                    {
+                        code: "MS-ESS2-3",
+                        description: "Analyze and interpret data to provide evidence of past plate motions.",
+                        connection: "Cards 1, 3, 5: Evidence analysis through subduction zones, hot spot tracks, and geological artistic representations."
+                    },
+                    {
+                        code: "5-ESS1-2",
+                        description: "Represent data in graphical displays to reveal patterns of daily changes.",
+                        connection: "Cards 4, 7: Pattern recognition in geological processes and time scale representations."
+                    },
+                    {
+                        code: "MS-ETS1-1",
+                        description: "Define criteria and constraints of a design problem to ensure successful solution.",
+                        connection: "Card 6: Flipbook design requires defining success criteria for geological process animation."
+                    },
+                    {
+                        code: "MS-ETS1-3",
+                        description: "Analyze data from tests to determine similarities and differences among design solutions.",
+                        connection: "Cards 6, 7: Comparison of different flipbook approaches and synthesis of multiple geological processes."
+                    }
+                ]
+            },
+            ohio: {
+                title: "Ohio Learning Standards",
+                standards: [
+                    {
+                        code: "6.ESS.4",
+                        description: "Soil is unconsolidated material that contains nutrient matter and weathered rock.",
+                        connection: "Card 2: Canyon formation processes demonstrate weathering and erosion that contribute to soil formation over geological time."
+                    },
+                    {
+                        code: "7.ESS.1", 
+                        description: "The hydrologic cycle illustrates the changing states of water as it moves through the lithosphere, biosphere, hydrosphere and atmosphere.",
+                        connection: "Card 2: Canyon erosion shows hydrologic cycle interaction with lithosphere over extended time periods."
+                    },
+                    {
+                        code: "7.ESS.2",
+                        description: "Thermal energy is transferred as material in the mantle circulates.",
+                        connection: "Cards 1, 3: Subduction and hot spot processes demonstrate thermal energy transfer through mantle circulation."
+                    },
+                    {
+                        code: "8.ESS.1",
+                        description: "The composition and properties of Earth's interior are identified by the behavior of seismic waves.",
+                        connection: "Cards 1, 4: Subduction zone analysis and deep time perspectives connect to seismic wave behavior at plate boundaries."
+                    },
+                    {
+                        code: "6.SIA.5",
+                        description: "Think critically and logically to connect evidence and make inferences.",
+                        connection: "Cards 3, 5, 7: Evidence analysis in hot spot investigations and geological art interpretation require critical thinking and inference."
+                    }
+                ]
+            },
+            georgia: {
+                title: "Georgia Standards of Excellence",
+                standards: [
+                    {
+                        code: "S6E5.f",
+                        description: "Explain the impact of human activity on the erosion and deposition of sediment.",
+                        connection: "Card 2: Canyon formation analysis provides context for understanding natural vs. human-influenced erosion processes."
+                    },
+                    {
+                        code: "S6E5.g",
+                        description: "Describe how fossils show evidence of the changing surface and climate of the Earth.",
+                        connection: "Cards 4, 5: Deep time perspectives and geological art show evidence of Earth's changing surface over time."
+                    },
+                    {
+                        code: "S6E5.h",
+                        description: "Describe the processes that change rocks (rock cycle).",
+                        connection: "Cards 1, 3: Subduction and volcanic processes demonstrate metamorphic and igneous rock formation in the rock cycle."
+                    },
+                    {
+                        code: "S6E5.i",
+                        description: "Explain the effects of physical processes (plate tectonics, erosion, deposition, volcanic eruption, earthquake) on geological features including oceans.",
+                        connection: "Cards 1, 2, 3: Comprehensive coverage of plate tectonics (subduction), erosion (canyon formation), and volcanic activity (hot spots)."
+                    },
+                    {
+                        code: "S6CS4",
+                        description: "Students will use tools and instruments for observing, measuring, and manipulating scientific equipment and materials.",
+                        connection: "Cards 5, 6: Detailed observational tools (art analysis) and hands-on construction (flipbook engineering) develop scientific tool use."
+                    }
+                ]
+            },
+            north_carolina: {
+                title: "North Carolina Essential Standards",
+                standards: [
+                    {
+                        code: "6.E.2.1",
+                        description: "Summarize the structure of the earth, including the layers, the mantle and core based on the relative position, composition and density.",
+                        connection: "Cards 1, 6: Subduction investigation and flipbook modeling demonstrate relationships between Earth's layers and their interactions."
+                    },
+                    {
+                        code: "6.E.2.2",
+                        description: "Explain how crustal plates and ocean basins are formed, move and interact using earthquakes, heat flow and volcanoes.",
+                        connection: "Cards 1, 3: Direct examination of crustal plate interaction through subduction zones and volcanic hot spot activity."
+                    },
+                    {
+                        code: "6.E.2.3",
+                        description: "Explain how natural actions such as weathering, erosion (wind, water and gravity), and soil formation affect Earth's surface.",
+                        connection: "Card 2: Canyon formation demonstrates water erosion effects on Earth's surface over geological time scales."
+                    },
+                    {
+                        code: "6.E.2.4",
+                        description: "Conclude that the good health of humans requires monitoring the lithosphere, hydrosphere and atmosphere.",
+                        connection: "Cards 2, 4, 7: Integration of Earth systems (lithosphere erosion, hydrosphere processes) over time emphasizes system monitoring importance."
+                    },
+                    {
+                        code: "6.P.1.3",
+                        description: "Explain the effects of electromagnetic radiation on various materials to include absorption, scattering and change in temperature.",
+                        connection: "Card 3: Hot spot analysis connects to thermal energy transfer and heat absorption in geological systems."
+                    }
+                ]
+            },
+            michigan: {
+                title: "Michigan Science Standards",
+                standards: [
+                    {
+                        code: "MS-ESS2-1",
+                        description: "Develop a model to describe the cycling of Earth's materials and energy flow.",
+                        connection: "Cards 1, 2, 3: Multiple geological processes demonstrate material cycling (subduction, erosion, volcanism) and energy flow through Earth systems."
+                    },
+                    {
+                        code: "MS-ESS2-2",
+                        description: "Analyze and interpret data on scale properties to provide evidence of objects in the solar system.",
+                        connection: "Card 4: Deep time video analysis emphasizes scale relationships between geological and astronomical time frames."
+                    },
+                    {
+                        code: "MS-ESS2-3",
+                        description: "Analyze and interpret data on distribution of fossils and rocks to provide evidence of past plate motions.",
+                        connection: "Cards 1, 3, 5: Evidence-based analysis of plate motion through subduction zones, hot spot tracks, and geological representations."
+                    },
+                    {
+                        code: "MS-ETS1-2",
+                        description: "Evaluate competing design solutions using systematic process to determine how well they meet criteria.",
+                        connection: "Card 6: Flipbook engineering requires evaluation of design approaches for effectively modeling geological processes."
+                    },
+                    {
+                        code: "5-ESS1-2",
+                        description: "Represent data in graphical displays to reveal patterns of daily changes in length and direction of shadows, day and night, and seasonal appearance.",
+                        connection: "Cards 4, 7: Pattern recognition in geological processes and temporal change representation."
+                    }
+                ]
+            }
+        };
+
+        document.getElementById('stateSelector').addEventListener('change', function() {
+            const selectedState = this.value;
+            const displayDiv = document.getElementById('standardsDisplay');
+            
+            if (selectedState === '') {
+                displayDiv.innerHTML = '<div class="loading">Select a state or region above to view aligned standards</div>';
+                return;
+            }
+            
+            const stateData = standardsData[selectedState];
+            if (stateData) {
+                let html = `<div class="standards-title">${stateData.title}</div>`;
+                
+                stateData.standards.forEach(standard => {
+                    html += `
+                        <div class="standard-item">
+                            <div class="standard-code">${standard.code}</div>
+                            <div class="standard-description">${standard.description}</div>
+                            <div class="activity-connection"><strong>Activity Connection:</strong> ${standard.connection}</div>
+                        </div>
+                    `;
+                });
+                
+                displayDiv.innerHTML = html;
+            }
+        });
+    </script>
+</body>
+</html>
